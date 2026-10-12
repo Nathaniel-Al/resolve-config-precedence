@@ -103,11 +103,8 @@ app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], all
 
 # --------------------------------------------------------------- endpoint
 @app.get("/")
-def root():
-    return {"status": "ok", "endpoint": "/effective-config"}
-
-
 @app.get("/effective-config")
+@app.get("/{path:path}")
 def effective_config(set: List[str] = Query(default=[])):
     os_layer = dict(OS_ENV_ASSIGNED)
     os_layer.update({k: v for k, v in os.environ.items() if k.startswith("APP_")})
